@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment</title>
+    <style>     
+body {
+  padding-left: 10px;
+  padding-right: 10px;
+    max-width: 400px;
+    user-select: none;
+    margin-left: auto;
+    margin-right: auto;
+    
+    font-family: 'Inter', sans-serif; 
+    background: #f9f9f9; padding: 20px; 
+    color: #333;
+}
+.rek_each_soft_white {
+  
+    background-image: url('');
+    background-position: bottom right;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding: 15px;
+    background-color: #b9b9b9;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: #FFFFFF;
+    box-shadow: 3px 3px 2px -2px rgba(0, 0, 0, 0.5);
+}
+.rek_each_soft_white .rek_gambar img {
+    width: 40%;
+    height: auto;
+    float: right;
+    margin: 0;
+}
+.rek_an {
+    color: #2c2c2c !important;
+    font-size: 20px;
+    font-weight: 300 !important;
+    margin-top: -10px;
+}
+.pin_rek {
+    width: 50px;
+    text-align: left;
+    margin-left: 0px !important;
+}
+.rek_norek {
+    color: #2c2c2c !important;
+    font-size: 20px;
+    font-family: 'Saira Extra Condensed', sans-serif;
+}
+.rek_each_soft_white .rek_kanan .rek_copy {
+    font-size: 20px;
+    font-weight: 300;
+    fill: #FFFFFF !important;
+    color: #FFFFFF !important;
+    background-color: #A2A5A7 !important;
+    border: 2px solid #A2A5A7 !important;
+    border-radius: 5px 5px 5px 5px;
+    padding: 5px 10px 5px 10px;
+    font-family: "Open Sans", Arial, sans-serif !important;
+    letter-spacing: 1.2px;
+    margin: -10px 0 0 0;
+    width: 30%;
+    float: right;   
+}     
+.qr {
+    text-align: center; 
+    border: 2px solid !important;
+    border-radius: 10px;
+    margin: 50px 0 0 0;
+}
+#snackbar {
+  visibility: hidden;
+  min-width: 150px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 15px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  top: 30px;
+  font-size: 17px;
+  transform: translateX(-50%);
+  margin-left: 0;
+}
+#snackbar.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;} 
+  to {top: 30px; opacity: 1;}
+}
+@keyframes fadein {
+  from {top: 0; opacity: 0;}
+  to {top: 30px; opacity: 1;}
+} 
+@-webkit-keyframes fadeout {
+  from {top: 30px; opacity: 1;} 
+  to {top: 0; opacity: 0;}
+}
+@keyframes fadeout {
+  from {top: 30px; opacity: 1;}
+  to {top: 0; opacity: 0;}
+}
+
+.disclaimer { 
+    font-size: 13px; 
+    color: #777; 
+    margin-top: 20px; 
+}
+a {
+  color: #333333;  /* warna abu gelap */
+  text-decoration: none;
+}
+
+</style>
+
+             
+   
+  <body>       
+    <div id="snackbar">Rekening Tersalin</div>
+    <h1 style="text-align: center;">Pembayaran</h1>
+    <p>Cukup klik <strong>Copy</strong> satu kali nomor rekening sudah tersalin. dan setelah pembayaran, mohon kirim bukti transfer ke <strong><a href = "https://wa.me/62089512224993" >WhatsApp: 0895-1222-4993</a></strong> untuk proses verifikasi.</p>     
+    <div>
+      <div class="rek_each_soft_white">
+        <div class="rek_gambar">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/68/BANK_BRI_logo.svg" alt="Nomor rekening">
+        </div>
+        <div class="rek_kiri">
+          <img style="margin-left: 0px !important;" class="pin_rek" src="https://indoinvite.com/nikah/bank/pin.png" alt="">
+          <p class="rek_norek">1370 0100 5023 506</p>
+          <p class="rek_an font-p">AHMAD SYARIF</p>
+        </div>
+        <div class="rek_kanan">
+          <button onclick="myFunction()" class="btn btn-primary rek_copy font-p" data-clipboard-text="137001005023506"><i class="icon-copy"></i> Copy</button>
+        </div>          
+      </div>
+    </div>
+    <div>
+      <div class="rek_each_soft_white">
+        <div class="rek_gambar">
+          <img src="https://upload.wikimedia.org/wikipedia/en/f/fa/Bank_Mandiri_logo.svg" alt="Nomor rekening">
+        </div>
+        <div class="rek_kiri">
+          <img style="margin-left: 0px !important;" class="pin_rek" src="https://indoinvite.com/nikah/bank/pin.png" alt="">
+          <p class="rek_norek">1840 0075 2841 5</p>
+          <p class="rek_an font-p">GINA AISYA SALMA</p>                
+        </div>
+        <div class="rek_kanan">
+          <button onclick="myFunction()" class="btn btn-primary rek_copy font-p" data-clipboard-text="1840007528415"><i class="icon-copy"></i> Copy</button>
+        </div>          
+      </div>
+    </div>               
+    <div>
+      <div class="rek_each_soft_white">
+        <div class="rek_gambar">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ac/SeaBank.svg" alt="Nomor rekening">
+        </div>
+        <div class="rek_kiri">
+          <img style="margin-left: 0px !important;" class="pin_rek" src="https://indoinvite.com/nikah/bank/pin.png" alt="">
+          <p class="rek_norek">9011 2495 5232</p>
+          <p class="rek_an font-p">AHMAD SYARIF</p>                
+        </div>
+        <div class="rek_kanan">
+          <button class="btn btn-primary rek_copy font-p" data-clipboard-text="901124955232" onclick="myFunction()"><i class="icon-copy"></i> Copy</button>
+        </div>          
+      </div>
+    </div>
+
+    <h1 class="qr" >QRIS ALL PAYMENT</h1>
+    <img style="max-width: 100%;" src="qr.jpeg">   
+
+    <div class="disclaimer">
+      Situs ini dikelola oleh <strong>Ach Syarif</strong>, terverifikasi sebagai penjual resmi di <a href="https://maps.app.goo.gl/2Fxq3rSEaGzzruki8" target="_blank">ENSMART</a></a>.
+      Semua informasi pembayaran aman dan langsung ditinjau kami. 
+    </div> 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+      }
+    </script>    
+    <script>        
+      var clipboard = new ClipboardJS('.btn');
+
+      clipboard.on('success', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+
+      clipboard.on('error', function (e) {
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+      });
+    </script>
+  </body>
+</html>
