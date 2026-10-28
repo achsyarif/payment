@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en-US">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Payment</title>
+    <title>Pembayaran | ACH SYARIF</title>
     <style>     
 body {
   padding-left: 10px;
@@ -73,12 +73,6 @@ body {
     width: 30%;
     float: right;   
 }     
-.qr {
-    text-align: center; 
-    border: 2px solid !important;
-    border-radius: 10px;
-    margin: 50px 0 0 0;
-}
 #snackbar {
   visibility: hidden;
   min-width: 150px;
@@ -116,9 +110,363 @@ body {
   from {top: 30px; opacity: 1;}
   to {top: 0; opacity: 0;}
 }
+.qris-generator {
+  margin: 24px 0;
+  padding: 16px;
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
+  background-color: #f7f7f7;
+}
+.qris-generator label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.qris-generator input,
+.qris-generator button {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  font: inherit;
+}
+.qris-generator button {
+  margin-top: 10px;
+  border: 0;
+  border-radius: 6px;
+  background-color: #176b3a;
+  color: #fff;
+  cursor: pointer;
+}
+.qris-generator button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.qris-quick-amounts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+.qris-generator .qris-quick-amount {
+  width: auto;
+  margin-top: 0;
+  border: 1px solid #176b3a;
+  background-color: #fff;
+  color: #176b3a;
+}
+#qris-total, #qris-fee {
+  font-weight: 600;
+}
+#qris-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+.qris-merchant {
+  text-align: center;
+}
+.qris-merchant-name {
+  margin: 0;
+  color: #17231d;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.qris-merchant-location {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+#qris-result canvas, #qris-result img {
+  max-width: 100%;
+  height: auto;
+}
+#qris-error {
+  color: #a00000;
+}
+
+:root {
+  color-scheme: light;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color: #17231d;
+  background: #f3f6f3;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --green: #176b3a;
+  --green-dark: #10532c;
+  --muted: #66736b;
+  --line: #e2e9e3;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  width: min(100% - 32px, 1120px);
+  max-width: none;
+  padding: 28px 0 40px;
+  margin: 0 auto;
+  user-select: auto;
+}
+body > div:not(#snackbar) {
+  display: contents;
+}
+body > h1,
+body > h4,
+body > .qris-generator,
+body > p {
+  grid-column: 1 / -1;
+}
+body > h1 {
+  margin: 8px 0 -10px;
+  color: #14251b;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+body > h4 {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+.rek_each_soft_white {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 190px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 0;
+  padding: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(27, 55, 37, 0.06);
+}
+.rek_each_soft_white .rek_gambar {
+  display: flex;
+  min-height: 32px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.rek_each_soft_white .rek_gambar img {
+  float: none;
+  width: auto;
+  max-width: 116px;
+  max-height: 34px;
+  object-fit: contain;
+}
+.pin_rek {
+  display: none;
+}
+.rek_norek {
+  margin: 0 0 6px;
+  color: #17231d !important;
+  font-family: inherit;
+  font-size: clamp(1.25rem, 4vw, 1.55rem);
+  font-weight: 650;
+  letter-spacing: 0.025em;
+  overflow-wrap: anywhere;
+}
+.rek_an {
+  margin: 0;
+  color: var(--muted) !important;
+  font-size: 0.82rem;
+  font-weight: 600 !important;
+  letter-spacing: 0.07em;
+}
+.rek_each_soft_white .rek_kanan .rek_copy {
+  width: 100%;
+  min-height: 44px;
+  margin: 0;
+  padding: 10px 16px;
+  border: 0 !important;
+  border-radius: 9px;
+  background: #edf5ef !important;
+  color: var(--green) !important;
+  font-family: inherit !important;
+  font-size: 0.92rem;
+  font-weight: 650;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+.rek_each_soft_white .rek_kanan .rek_copy:hover {
+  background: var(--green) !important;
+  color: #fff !important;
+}
+.rek_each_soft_white .rek_kanan .rek_copy:focus-visible,
+.qris-generator button:focus-visible,
+.qris-generator input:focus-visible,
+a:focus-visible {
+  outline: 3px solid rgba(23, 107, 58, 0.3);
+  outline-offset: 2px;
+}
+.qris-generator {
+  margin: 8px 0 0;
+  padding: clamp(20px, 4vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(27, 55, 37, 0.07);
+}
+.qris-generator h2 {
+  margin: 0 0 8px;
+  color: #14251b;
+  font-size: clamp(1.35rem, 4vw, 1.7rem);
+  letter-spacing: -0.035em;
+}
+.qris-generator > p:first-of-type {
+  margin: 0 0 24px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.qris-generator label {
+  margin-bottom: 9px;
+  color: #34443a;
+  font-size: 0.9rem;
+}
+.qris-generator input {
+  min-height: 52px;
+  padding: 12px 14px;
+  border: 1px solid #d5dfd7;
+  border-radius: 10px;
+  background: #fbfdfb;
+  color: #17231d;
+  font-size: 1.05rem;
+}
+.qris-generator input:focus {
+  border-color: var(--green);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(23, 107, 58, 0.1);
+}
+.qris-quick-amounts {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 12px 0 22px;
+}
+.qris-generator .qris-quick-amount {
+  min-height: 42px;
+  padding: 8px;
+  border: 1px solid #dbe7dd;
+  border-radius: 9px;
+  background: #f8fbf8;
+  color: var(--green);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+.qris-generator .qris-quick-amount:hover {
+  border-color: var(--green);
+  background: #edf5ef;
+}
+.qris-generator form > p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 10px 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+#qris-total, #qris-fee {
+  color: #26372c;
+  font-variant-numeric: tabular-nums;
+}
+.qris-generator #qris-total {
+  color: var(--green);
+  font-size: 1.08rem;
+}
+.qris-generator #qris-submit {
+  min-height: 50px;
+  margin-top: 16px;
+  border-radius: 10px;
+  background: var(--green);
+  color: #fff;
+  font-weight: 650;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.qris-generator #qris-submit:hover {
+  background: var(--green-dark);
+}
+.qris-generator #qris-submit:active {
+  transform: translateY(1px);
+}
+#qris-result {
+  padding: 8px;
+}
+#qris-result canvas, #qris-result img {
+  border: 10px solid #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 18px rgba(18, 38, 25, 0.12);
+}
+body > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+body > p a {
+  color: var(--green);
+  font-weight: 600;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+#snackbar {
+  min-width: 0;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: #17231d;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  font-size: 0.9rem;
+}
+@media (min-width: 720px) {
+  body {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    padding-top: 48px;
+  }
+  body > h1,
+  body > h4,
+  body > .qris-generator,
+  body > p {
+    grid-column: 1 / -1;
+  }
+  .rek_each_soft_white {
+    min-height: 220px;
+    padding: 22px;
+  }
+  .qris-generator {
+    width: min(100%, 720px);
+    justify-self: center;
+  }
+}
+@media (max-width: 420px) {
+  body {
+    width: min(100% - 24px, 1120px);
+    gap: 12px;
+    padding-top: 18px;
+  }
+  .qris-generator {
+    padding: 18px;
+  }
+  .qris-quick-amounts {
+    gap: 7px;
+  }
+  .qris-generator .qris-quick-amount {
+    font-size: 0.82rem;
+  }
+}
 </style>
 
-             
+</head>
    
   <body>       
     <div id="snackbar">Rekening Tersalin</div>
@@ -169,9 +517,27 @@ body {
         </div>          
       </div>
     </div>
-    <h1 class="qr" >QRIS ALL PAYMENT</h1>
-    <img style="max-width: 100%;" src="qr.jpeg">        
+    <section class="qris-generator" aria-labelledby="qris-title">
+      <h2 id="qris-title">QRIS ALL PAYMENT</h2>
+      <p>Masukkan nominal pembayaran. Untuk nominal di atas Rp500.000, biaya 0,3% ditambahkan ke total QRIS.</p>
+      <form id="qris-form">
+        <label for="qris-amount">Nominal pembayaran (Rp)</label>
+        <input id="qris-amount" name="amount" type="number" min="1" step="1" inputmode="numeric" required>
+        <div class="qris-quick-amounts" aria-label="Pilih nominal cepat">
+          <button class="qris-quick-amount" type="button" data-amount="100000">Rp100.000</button>
+          <button class="qris-quick-amount" type="button" data-amount="200000">Rp200.000</button>
+          <button class="qris-quick-amount" type="button" data-amount="300000">Rp300.000</button>
+          <button class="qris-quick-amount" type="button" data-amount="500000">Rp500.000</button>
+        </div>
+        <p>Biaya tambahan: <span id="qris-fee">Rp0</span></p>
+        <p>Total pada QRIS: <span id="qris-total">Rp0</span></p>
+        <button id="qris-submit" type="submit">Generate QRIS</button>
+      </form>
+      <p id="qris-error" role="alert" hidden></p>
+      <div id="qris-result" aria-live="polite"></div>
+    </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
       function myFunction(button) {
         var x = document.getElementById("snackbar");
@@ -202,6 +568,136 @@ body {
         console.info('Text:', e.text);
         console.info('Trigger:', e.trigger);
       });
+    </script>
+    <script>
+      (function () {
+        var qrisTemplate = '00020101021226570011ID.DANA.WWW011893600915072347403602097234740360303UMI51440014ID.CO.QRIS.WWW0215ID10243371058280303UMI5204549953033605405250005802ID5910ACH SYARIF6012Kab. Rembang610559261621960150011ID.DANA.WWW6304608E';
+        var amountInput = document.getElementById('qris-amount');
+        var feeOutput = document.getElementById('qris-fee');
+        var totalOutput = document.getElementById('qris-total');
+        var result = document.getElementById('qris-result');
+        var errorOutput = document.getElementById('qris-error');
+        var rupiah = new Intl.NumberFormat('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+          maximumFractionDigits: 0
+        });
+
+        function crc16Ccitt(value) {
+          var crc = 0xFFFF;
+          for (var i = 0; i < value.length; i++) {
+            crc ^= value.charCodeAt(i) << 8;
+            for (var bit = 0; bit < 8; bit++) {
+              crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+              crc &= 0xFFFF;
+            }
+          }
+          return crc.toString(16).toUpperCase().padStart(4, '0');
+        }
+
+        function makeQrisPayload(amount) {
+          var payload = qrisTemplate.slice(0, -8);
+          var updated = '';
+          var amountFound = false;
+          var position = 0;
+
+          while (position < payload.length) {
+            var tag = payload.slice(position, position + 2);
+            var length = Number(payload.slice(position + 2, position + 4));
+            var valueStart = position + 4;
+            var value = payload.slice(valueStart, valueStart + length);
+
+            if (tag.length !== 2 || !Number.isInteger(length) || value.length !== length) {
+              throw new Error('Template QRIS tidak valid.');
+            }
+            if (tag === '54') {
+              var amountText = String(amount);
+              if (amountText.length > 99) {
+                throw new Error('Nominal terlalu besar untuk format QRIS.');
+              }
+              updated += tag + String(amountText.length).padStart(2, '0') + amountText;
+              amountFound = true;
+            } else {
+              updated += payload.slice(position, valueStart + length);
+            }
+            position = valueStart + length;
+          }
+
+          if (!amountFound) {
+            throw new Error('Kolom nominal tidak ditemukan pada template QRIS.');
+          }
+          var checksumInput = updated + '6304';
+          return checksumInput + crc16Ccitt(checksumInput);
+        }
+
+        function updateAmounts() {
+          var amount = Number(amountInput.value);
+          var validAmount = Number.isSafeInteger(amount) && amount > 0;
+          var fee = validAmount && amount > 500000 ? Math.round(amount * 0.003) : 0;
+          feeOutput.textContent = rupiah.format(fee);
+          totalOutput.textContent = rupiah.format(validAmount ? amount + fee : 0);
+        }
+
+        document.querySelectorAll('.qris-quick-amount').forEach(function (button) {
+          button.addEventListener('click', function () {
+            amountInput.value = button.dataset.amount;
+            amountInput.dispatchEvent(new Event('input', { bubbles: true }));
+          });
+        });
+
+        amountInput.addEventListener('input', updateAmounts);
+        document.getElementById('qris-form').addEventListener('submit', function (event) {
+          event.preventDefault();
+          errorOutput.hidden = true;
+          result.replaceChildren();
+
+          var amount = Number(amountInput.value);
+          if (!Number.isSafeInteger(amount) || amount <= 0) {
+            errorOutput.textContent = 'Masukkan nominal rupiah berupa bilangan bulat lebih dari 0.';
+            errorOutput.hidden = false;
+            return;
+          }
+
+          var fee = amount > 500000 ? Math.round(amount * 0.003) : 0;
+          var total = amount + fee;
+          if (!Number.isSafeInteger(total)) {
+            errorOutput.textContent = 'Total nominal tidak valid.';
+            errorOutput.hidden = false;
+            return;
+          }
+          if (typeof QRCode === 'undefined') {
+            errorOutput.textContent = 'Library QR tidak tersedia. Periksa koneksi internet lalu coba lagi.';
+            errorOutput.hidden = false;
+            return;
+          }
+
+          try {
+            var payload = makeQrisPayload(total);
+            var merchant = document.createElement('div');
+            merchant.className = 'qris-merchant';
+            var merchantName = document.createElement('p');
+            merchantName.className = 'qris-merchant-name';
+            merchantName.textContent = 'ACH SYARIF';
+            var merchantLocation = document.createElement('p');
+            merchantLocation.className = 'qris-merchant-location';
+            merchantLocation.textContent = 'Kab. Rembang';
+            merchant.appendChild(merchantName);
+            merchant.appendChild(merchantLocation);
+            var qrCode = document.createElement('div');
+            result.appendChild(merchant);
+            result.appendChild(qrCode);
+            new QRCode(qrCode, {
+              text: payload,
+              width: 256,
+              height: 256,
+              correctLevel: QRCode.CorrectLevel.M
+            });
+          } catch (error) {
+            errorOutput.textContent = error.message;
+            errorOutput.hidden = false;
+          }
+        });
+      }());
     </script>
     <p style="text-align: center; margin-top: 20px;">
       <small>untuk melihat semua rekening <a href="allrekening.html">klik disini</a></small>
