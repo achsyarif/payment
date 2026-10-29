@@ -165,6 +165,9 @@ body {
   gap: 12px;
   margin-top: 16px;
 }
+#qris-result:empty {
+  display: none;
+}
 .qris-merchant {
   text-align: center;
 }
@@ -534,7 +537,7 @@ body > p a {
         <button id="qris-submit" type="submit">Generate QRIS</button>
       </form>
       <p id="qris-error" role="alert" hidden></p>
-      <div id="qris-result" aria-live="polite"></div>
+      <div id="qris-result" aria-live="polite" tabindex="-1"></div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -638,6 +641,11 @@ body > p a {
           totalOutput.textContent = rupiah.format(validAmount ? amount + fee : 0);
         }
 
+        function clearQrisResult() {
+          result.replaceChildren();
+          errorOutput.hidden = true;
+        }
+
         document.querySelectorAll('.qris-quick-amount').forEach(function (button) {
           button.addEventListener('click', function () {
             amountInput.value = button.dataset.amount;
@@ -645,7 +653,11 @@ body > p a {
           });
         });
 
-        amountInput.addEventListener('input', updateAmounts);
+        amountInput.addEventListener('focus', clearQrisResult);
+        amountInput.addEventListener('input', function () {
+          clearQrisResult();
+          updateAmounts();
+        });
         document.getElementById('qris-form').addEventListener('submit', function (event) {
           event.preventDefault();
           errorOutput.hidden = true;
@@ -692,6 +704,8 @@ body > p a {
               height: 256,
               correctLevel: QRCode.CorrectLevel.M
             });
+            result.focus({ preventScroll: true });
+            result.scrollIntoView({ behavior: 'smooth', block: 'center' });
           } catch (error) {
             errorOutput.textContent = error.message;
             errorOutput.hidden = false;
